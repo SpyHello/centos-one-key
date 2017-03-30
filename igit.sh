@@ -2,7 +2,7 @@
 
 yum install git -y
 useradd git
-chown -R /srv/webroot
+chown -R git.git /srv/webroot
 
 su git
 cd /home/git

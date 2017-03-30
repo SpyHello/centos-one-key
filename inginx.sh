@@ -70,20 +70,19 @@ function download(){
 nginx="nginx-1.10.3"
 nginx_download="http://nginx.org/download/${nginx}.tar.gz"
 
-SERVER_DIR=/srv
+SERVER_DIR=/home/srv
 INSTALL_DIR=${SERVER_DIR}/install
 NGINX_HOME=${SERVER_DIR}/nginx
+USER=lin
+GROUP=lin
 
 buildir ${SERVER_DIR}
 buildir ${INSTALL_DIR}
 buildir ${NGINX_HOME}
-USER=deamon
-GROUP=deamon
 
 httpd_file_path=${INSTALL_DIR}/${nginx}.tar.gz
-if [ ! -f ${httpd_file_path} ] ; then
-    download ${httpd_file_path} ${nginx_download}
-fi
+download ${httpd_file_path} ${nginx_download}
+
 httpd_folder_path=${INSTALL_DIR}/${nginx}
 if [ ! -d ${httpd_folder_path} ]; then
     tar -zxf ${httpd_file_path} -C ${INSTALL_DIR}
@@ -96,12 +95,11 @@ fi
 if [ ! -f ${NGINX_HOME}/install.lock ]; then
     cd ${httpd_folder_path}
     ./configure --prefix=${NGINX_HOME} \
-#    --user=${USER} --group=${GROUP}  \
+    --user=${USER} --group=${GROUP}  \
     --with-http_realip_module  \
     --with-http_sub_module  --with-http_gzip_static_module   \
     --with-http_stub_status_module    \
     --with-pcre --with-http_ssl_module
-
     # make clean &&
     make && make install
 
@@ -117,67 +115,11 @@ function backup(){
 }
 backup ${NGINX_HOME}/conf/nginx.conf
 
-# rm -f /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx
+# rm -f /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx   # /home/srv/nginx
 if [ ! -f /etc/init.d/nginx ]; then
-    echo "#!/bin/sh
-    # chkconfig: 2345 85 15
-    # Startup script for the nginx Web Server
-    # description: nginx is a World Wide Web server.
-    # It is used to serve HTML files and CGI.
-    # processname: nginx
-    # pidfile: /tmp/nginx.pid
-    # config: /srv/nginx/conf/nginx.conf
+    # todo nginxhome replace
+    cp ${CURRENT_DIR}/init.d/nginx.sh /etc/init.d/nginx
 
-    DESC=\"nginx server\"
-    NAME=nginx
-    DAEMON=/bin/nginx
-    SCRIPTNAME=/etc/init.d/nginx
-
-    test -x \$DAEMON || exit 0
-
-    d_start(){
-      \$DAEMON || echo -n \"already running\"
-    }
-
-    d_stop(){
-      \$DAEMON -s quit || echo -n \"not running\"
-    }
-
-
-    d_reload(){
-      \$DAEMON -s reload || echo -n \"can not reload\"
-    }
-
-    case \"\$1\" in
-    start)
-      echo -n \"Starting \$DESC: \$NAME\"
-      d_start
-      echo \".\"
-    ;;
-    stop)
-      echo -n \"Stopping \$DESC: \$NAME\"
-      d_stop
-      echo \".\"
-    ;;
-    reload)
-      echo -n \"Reloading \$DESC conf...\"
-      d_reload
-      echo \"reload .\"
-    ;;
-    restart)
-      echo -n \"Restarting \$DESC: \$NAME\"
-      d_stop
-      sleep 2
-      d_start
-      echo \".\"
-    ;;
-    *)
-      echo \"Usage: \$ScRIPTNAME {start|stop|reload|restart}\" >&2
-      exit 3
-    ;;
-    esac
-
-    exit 0" > /etc/init.d/nginx
     chmod a+x /etc/init.d/nginx
     ln -s /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx
     chkconfig --add nginx

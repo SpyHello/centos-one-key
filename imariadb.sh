@@ -65,9 +65,9 @@ function download(){
 }
 
 #install mysql
-SRV_HOME=/srv
+SRV_HOME=/home/srv
 MARIADB_PORT=3306
-ROOT_PWD=123456
+ROOT_PWD=PgYXWD147852
 MARIADB_HOME="${SRV_HOME}/mariadb"
 MARIADB_DATA_HOME="${MARIADB_HOME}/data"
 MARIADB_LOG_HOME="${MARIADB_HOME}/log/"
@@ -110,8 +110,8 @@ sort_buffer_size = 32M
 read_buffer = 1M
 write_buffer = 1M
 [mysqlhotcopy]
-interactive-timeout" > /root/my.cnf
-download /root/mariadb-10.1.21.tar.gz  "https://downloads.mariadb.org/f/mariadb-10.1.21/source/mariadb-10.1.21.tar.gz/from/http%3A//mirrors.tuna.tsinghua.edu.cn/mariadb/?serve"
+interactive-timeout" > /etc/my.cnf
+download ${INSTALL_HOME}/mariadb-10.1.21.tar.gz  "https://downloads.mariadb.org/f/mariadb-10.1.21/source/mariadb-10.1.21.tar.gz/from/http%3A//mirrors.tuna.tsinghua.edu.cn/mariadb/?serve"
 
 tar zxf mariadb-10.1.21.tar.gz
 cd mariadb-10.1.21
@@ -130,7 +130,8 @@ cmake . -DCMAKE_INSTALL_PREFIX=${MARIADB_HOME}/ \
 -DDEFAULT_CHARSET=utf8 \
 -DDEFAULT_COLLATION=utf8_general_ci \
 -DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
--DWITH_DEBUG=0 -with-low-memory
+-DWITH_DEBUG=0 \
+-with-low-memory
 
 
 # How to Fix PHP Configure “CC Internal error Killed (program cc1)” Error
@@ -140,7 +141,6 @@ make && make install
 rm -rf /etc/my.cnf
 rm -rf /etc/init.d/mysqld
 
-cp /root/my.cnf /etc/my.cnf
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod a+x /etc/init.d/mysqld
 chkconfig --add mysqld
@@ -150,7 +150,7 @@ chown mysql.mysql -R ${MARIADB_DATA_HOME}
 ${MARIADB_HOME}/scripts/mysql_install_db --user=mysql --basedir=${MARIADB_HOME} --datadir=${MARIADB_DATA_HOME}
 systemctl mysqld start
 echo 'export PATH=$PATH:'${MARIADB_HOME}'/bin' >> /etc/profile
-source "/etc/profile"
+# source "/etc/profile"
 ${MARIADB_HOME}/bin/mysql -e "grant all privileges on *.* to root@'%' identified by '${ROOT_PWD}' with grant option;"
 ${MARIADB_HOME}/bin/mysql -e "flush privileges;"
 ${MARIADB_HOME}/bin/mysql -e "delete from mysql.user where password='';"

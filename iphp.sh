@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 yum update
-yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
+yum install -y curl  wget make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
 
 
 function println(){
@@ -60,12 +60,13 @@ function buildir(){
 }
 
 ########################################################################################################################
-SRV_HOME=/srv
+SRV_HOME=/home/srv
 PHP7_HOME=${SRV_HOME}/php7
 HTTPD_HOME=${SRV_HOME}/apache24
 INSTALL_HOME=${SRV_HOME}/install
 # var
-php=php-7.0.15
+php=php-7.0.17
+# MIRROR=http://am1.php.net
 MIRROR=http://cn2.php.net
 
 # php 源码包下载解压
@@ -89,7 +90,7 @@ if [ ! -f ${jpegsrc_file_path} ]; then
     tar -zxvf ${jpegsrc_file_path} -C ${INSTALL_HOME}
     cd ${INSTALL_HOME}/${jpegsrc}
     ./configure
-    make clean && make && make install
+    make && make install
 fi
 # php主程序安装
 if [ ! -f ${PHP7_HOME}/path.lock ]; then
@@ -107,7 +108,7 @@ if [ ! -f ${PHP7_HOME}/path.lock ]; then
                 --with-gd  --with-freetype-dir  \
                 --with-curl  \
                 --enable-pcntl --enable-zip
-    make clean && make && make install
+    make && make install
 
     if [ -d ${PHP7_HOME}/lib/ ] ; then
         cp ${php_folder_path}/php.ini-development ${PHP7_HOME}/lib/php.ini
@@ -127,7 +128,11 @@ fi
 
 # fpm 安装
 if [ ! -f /etc/init.d/php-fpm ];then
-    cp ${PHP7_HOME}/sapi/fpm/init.d.php-fpm.in /etc/init.d/php-fpm
+    cp ${php_folder_path}/sapi/fpm/init.d.php-fpm.in /etc/init.d/php-fpm
+    cp ${php_folder_path}/sapi/fpm/php-fpm.conf ${PHP7_HOME}/etc/php-fpm.conf
+
+    mv /home/srv/php7/etc/php-fpm.d/www.conf.default  /home/srv/php7/etc/php-fpm.d/www.conf
+
     chmod a+x /etc/init.d/php-fpm
     chkconfig php-fpm on
     systemctl enable php-fpm
