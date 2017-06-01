@@ -1,70 +1,12 @@
 #!/usr/bin/env bash
 
 yum update -y
-yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
+yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64
+yum install -y pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
 
 #######################################  公共区域 ##########################################################################
 
 CURRENT_DIR=`pwd`
-function addpath(){
-    echo "export PATH=\${PATH}:${1}" >> /etc/profile
-    source /etc/profile
-}
-function buildir(){
-    # check parent dir
-    parentdir=`dirname $1`
-    if [ ! -d ${parentdir} ]; then
-        println "to make parentdir ${parentdir}"
-        buildir ${parentdir}
-    fi
-    # make dir
-    if [ ! -d $1 ]; then
-        println "to make dir ${1}"
-        mkdir $1
-    else
-        println "to make dir ${1}:exist"
-    fi
-}
-# replace text in certain line
-# @param int $line_number
-# @param string $text2replace
-# @param string $textfilepath
-function line_replace(){
-    sed -i "${1}c ${2}" ${3}
-}
-
-# insert text into text file
-# @param int $line_number
-# @param string $text2insert
-# @param string $textfilepath
-function iinsert(){
-    if [ ! -f ${3} ]; then
-        touch ${3}
-    fi
-    sed -i "${1}a ${2}" ${3}
-}
-function println(){
-    echo -e "|---- ${1}"
-}
-function copy(){
-    if [ ! -f $2 ]; then
-        println "file '${1}' begin copy";
-        cp -R $1 $2
-    else
-        println "file '${1}' exist, stop copy";
-    fi
-}
-function download(){
-    buildir `dirname $1`
-    if [ ! -f $1 ]; then
-        println "file '${1}' begin download";
-        wget $2 -O $1
-#        curl -o $1 -L --connect-timeout 100 -m 200 $2
-    else
-        println "file '${1}' exist, stop download";
-    fi
-}
-
 
 ########################################################################################################################
 
