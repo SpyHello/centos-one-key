@@ -4,16 +4,18 @@ yum update -y
 yum install -y curl  wget make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64
 yum install -y freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64
 yum install -y openssl.x86_64 openssl-devel libxml2-devel
-# libperl-dev libfreetype6-dev libpng12-dev libpcre2-dev libssh-dev libcurl4-openssl-dev libxml2-dev
+yum install -y libperl-dev libfreetype6-dev libpng12-dev libpcre2-dev libssh-dev libcurl4-openssl-dev libxml2-dev
+
+source ./include.sh
 
 ########################################################################################################################
 SRV_HOME=/home/srv
-PHP7_HOME=${SRV_HOME}/php7
+PHP7_HOME=${SRV_HOME}/php
 INSTALL_HOME=${SRV_HOME}/install
 # var
-php=php-7.0.17
-# MIRROR=http://am1.php.net
-MIRROR=http://cn2.php.net
+php=php-7.0.19
+MIRROR=http://am1.php.net
+#MIRROR=http://cn2.php.net
 
 # php 源码包下载解压
 php_file_path=${INSTALL_HOME}/${php}.tar.gz
@@ -58,6 +60,9 @@ if [ ! -f ${PHP7_HOME}/path.lock ]; then
 
     if [ -d ${PHP7_HOME}/lib/ ] ; then
         cp ${php_folder_path}/php.ini-development ${PHP7_HOME}/lib/php.ini
+
+        # 时区替换
+        sed -i 's/;date.timezone =/date.timezone = Asia\/Shanghai/' ${PHP7_HOME}/lib/php.ini
 
         addpath ${PHP7_HOME}/bin
         touch ${PHP7_HOME}/path.lock
