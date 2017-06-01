@@ -70,6 +70,9 @@ copy ${CURRENT_DIR}/conf/nginx.conf ${NGINX_HOME}/conf/nginx.conf
 buildir /home/srv/webroot/public
 echo "<?php phpinfo();" > /home/srv/webroot/public/__info.php
 
+chmod -R 0755 /home/srv
+chown -R nobody.nobody /home/srv/nginx
+
 if [ ! -f /etc/init.d/nginx ]; then
 
     println "create /etc/init.d/nginx"
@@ -78,6 +81,8 @@ if [ ! -f /etc/init.d/nginx ]; then
 
     println "create /etc/rc.d/rc5.d/S85nginx"
     ln -s /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx
+
+
 
     chkconfig --add nginx
     systemctl enable nginx
