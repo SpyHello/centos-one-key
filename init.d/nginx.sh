@@ -5,7 +5,7 @@
 #
 # description: nginx is a World Wide Web server.
 # processname: nginx
-# pidfile: /home/srv/nginx/log/nginx.pid
+# pidfile: /home/srv/nginx/logs/nginx.pid
 # config: /home/srv/nginx/conf/nginx.conf
 
 NGINX_HOME=/home/srv/nginx
