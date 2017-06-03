@@ -95,3 +95,37 @@ function backup(){
         cp $1 "${1}.bak"
     fi
 }
+
+
+
+
+# 提高TCP负载能力
+echo 1024 >/proc/sys/net/core/somaxconn
+
+# 虚拟内存配置 2 GB
+#mkdir -p /var/cache/swap/
+#dd if=/dev/zero of=/var/cache/swap/swap0 bs=1M count=2048
+#chmod 0600 /var/cache/swap/swap0
+#mkswap /var/cache/swap/swap0
+# 下面的操作可能会失败，提示:swapon: Operation not permitted
+# 这是OpenVZ架构的VM的限制
+#swapon /var/cache/swap/swap0
+
+
+
+# 实际上，上边这个脚本只能增加一个可看但不可用的swap而已
+#SWAP="${1:-512}"
+#NEW="$[SWAP*1024]"; TEMP="${NEW//?/ }"; OLD="${TEMP:1}0"
+#umount /proc/meminfo 2> /dev/null
+#sed "/^Swap\(Total\|Free\):/s,$OLD,$NEW," /proc/meminfo > /etc/fake_meminfo
+#mount --bind /etc/fake_meminfo /proc/meminfo
+
+
+
+# 正确给OpenVZ的VPS增加SWAP的做法是登录母鸡：
+copy ${CURRENT_DIR}/repo/openvz.repo /etc/yum.repos.d/openvz.repo
+cd /etc/yum.repos.d
+rpm --import http://download.openvz.org/RPM-GPG-Key-OpenVZ
+yum update -y
+yum install ovzkernel vzctl vzquota -y
+vzctl set 33 --swappages 0:2048M --save

@@ -1,49 +1,11 @@
 #!/usr/bin/bash
 
+source /etc/profile
+source ./include.sh
 
-function buildir(){
-    # check parent dir
-    parentdir=`dirname $1`
-    if [ ! -d ${parentdir} ]; then
-        println "to make parentdir ${parentdir}"
-        buildir ${parentdir}
-    fi
-    # make dir
-    if [ ! -d $1 ]; then
-        println "to make dir ${1}"
-        mkdir $1
-    else
-        println "to make dir ${1}:exist"
-    fi
-}
-
-
-function println(){
-    echo -e "|---- ${1}"
-}
-# insert text into text file
-# @param int $line_number
-# @param string $text2insert
-# @param string $textfilepath
-function iinsert(){
-    if [ ! -f ${3} ]; then
-        touch ${3}
-    fi
-    sed -i "${1}a ${2}" ${3}
-}
 server_dir=/home/srv
-redis=redis-3.2.7
+redis=redis-3.2.9
 install_dir=${server_dir}/install
-
-function download(){
-    if [ ! -f $1 ]; then
-        println "file '${1}' begin download";
-        curl -o $1 -L --connect-timeout 100 -m 200 $2
-    else
-        println "file '${1}' exist, stop download";
-    fi
-}
-
 
 # download redis
 redis_file_path=${install_dir}/${redis}.tgz
@@ -54,7 +16,6 @@ if [ ! -d ${redis_folder_path} ]; then
 else
     println "${redis} source exist"
 fi
-
 
 # install redis
 redis_server=/usr/local/bin/redis-server
@@ -82,4 +43,18 @@ if [ ! -f ${redis_init_script} ]; then
     systemctl enable redis
 fi
 
+
+redis_ext=redis-3.1.2
+redis_ext_file=${install_dir}/${redis_ext}.tgz
+download ${redis_ext_file} http://pecl.php.net/get/${redis_ext}.tgz
+redis_ext_path=${install_dir}/redis_ext
+if [ ! -d ${redis_ext_path} ]; then
+    tar -zxvf ${redis_ext_file} -C ${install_dir}
+    cd ${install_dir}/${redis_ext}
+    phpize
+    ./configure
+    make && make install
+else
+    println "${redis} source exist"
+fi
 # http://pecl.php.net/get/redis-3.1.2.tgz
