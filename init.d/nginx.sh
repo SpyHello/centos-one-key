@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# chkconfig: 2345 85 15
+# chkconfig: - 85 15
 #
 # Startup script for the nginx Web Server
 #
-# description: nginx is a World Wide Web server.
+# description: nginx is a www server.
 # processname: nginx
 # pidfile: /home/srv/nginx/logs/nginx.pid
 # config: /home/srv/nginx/conf/nginx.conf
@@ -14,37 +14,18 @@ nginxd=${NGINX_HOME}/sbin/nginx
 nginx_config=${NGINX_HOME}/conf/nginx.conf
 nginx_pid=${NGINX_HOME}/logs/nginx.pid
 
-
-
-if [ -f ${nginx_pid} ]; then
-    pid=`cat ${nginx_pid}`
-else
-    pid=0
-fi
-
-
 function start ()
 {
     ${nginxd} -c ${nginx_config}
 }
 function stop() {
     ${nginxd} -s stop
-#    pid=`cat ${nginx_pid}`
-#    if [ -f ${nginx_pid} ]; then
-#        kill pid
-#        rm -f  ${nginx_pid}
-#    fi
 }
 # reload nginx service functions.
 function reload() {
     stop
     start
 }
-
-    if [ ! -f ${nginx_pid} ]; then
-        start
-        exit 0
-    fi
 
 # See how we were called.
 case "$1" in
