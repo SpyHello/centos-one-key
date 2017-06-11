@@ -4,7 +4,7 @@ yum update -y
 yum install -y curl  wget make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64
 yum install -y freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64
 yum install -y openssl.x86_64 openssl-devel libxml2-devel
-yum install -y libperl-dev libfreetype6-dev libpng12-dev libpcre2-dev libssh-dev libcurl4-openssl-dev libxml2-dev
+# yum install -y libperl-dev libfreetype6-dev libpng12-dev libpcre2-dev libssh-dev libcurl4-openssl-dev libxml2-dev
 
 source ./include.sh
 
@@ -14,8 +14,13 @@ PHP7_HOME=${SRV_HOME}/php
 INSTALL_HOME=${SRV_HOME}/install
 # var
 php=php-7.0.19
-MIRROR=http://am1.php.net
-#MIRROR=http://cn2.php.net
+if [ $# > 1 ]; then
+    # 国外线路(脚本执行时带任意参数)
+    MIRROR=http://am1.php.net
+else
+    # 国内线路
+    MIRROR=http://cn2.php.net
+fi
 
 # php 源码包下载解压
 php_file_path=${INSTALL_HOME}/${php}.tar.gz
@@ -48,6 +53,7 @@ if [ ! -f ${PHP7_HOME}/path.lock ]; then
                 --enable-fpm \
                 --enable-sockets \
                 --with-openssl  \
+                --enable-bcmath \
                 --with-libxml-dir \
                 --with-pcre-regex \
                 --enable-mbstring   \

@@ -28,16 +28,24 @@ function start ()
     ${nginxd} -c ${nginx_config}
 }
 function stop() {
-    if [ -f ${nginx_pid} ]; then
-        kill pid
-        rm -f  ${nginx_pid}
-    fi
+    ${nginxd} -s stop
+#    pid=`cat ${nginx_pid}`
+#    if [ -f ${nginx_pid} ]; then
+#        kill pid
+#        rm -f  ${nginx_pid}
+#    fi
 }
 # reload nginx service functions.
 function reload() {
     stop
     start
 }
+
+    if [ ! -f ${nginx_pid} ]; then
+        start
+        exit 0
+    fi
+
 # See how we were called.
 case "$1" in
     start)
@@ -60,4 +68,6 @@ case "$1" in
             echo $"Usage: nginx {start|stop|restart|reload|status|help}"
             exit 1
 esac
+
+
 exit

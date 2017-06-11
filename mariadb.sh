@@ -68,10 +68,11 @@ chown mysql.mysql -R ${mysql_logdir}
 chown mysql.mysql -R ${mysql_datadir}
 ${mysql_dir}/scripts/mysql_install_db --user=mysql --basedir=${mysql_dir} --datadir=${mysql_datadir}
 systemctl start mysqld
+systemctl enable mysqld
 echo 'export PATH=$PATH:'${mysql_dir}'/bin' >> /etc/profile
 source "/etc/profile"
 ${mysql_dir}/bin/mysql -e "grant all privileges on *.* to root@'%' identified by '$mysql_passwd' with grant option;"
 ${mysql_dir}/bin/mysql -e "flush privileges;"
 ${mysql_dir}/bin/mysql -e "delete from mysql.user where password='';"
-systemctl mysqld restart
+systemctl restart mysqld
 echo "mysql install success!"

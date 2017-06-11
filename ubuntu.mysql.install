@@ -1,0 +1,30 @@
+Preparing to unpack .../mysql-server-5.7_5.7.18-0ubuntu0.16.04.1_amd64.deb ...
+Aborting downgrade from (at least) 10.2 to 5.7.
+If are sure you want to downgrade to 5.7, remove the file
+/var/lib/mysql/debian-*.flag and try installing again.
+dpkg: error processing archive /var/cache/apt/archives/mysql-server-5.7_5.7.18-0ubuntu0.16.04.1_amd64.deb (--unpack):
+ subprocess new pre-installation script returned error exit status 1
+Selecting previously unselected package mysql-client.
+Preparing to unpack .../mysql-client_5.7.18-0ubuntu0.16.04.1_all.deb ...
+Unpacking mysql-client (5.7.18-0ubuntu0.16.04.1) ...
+Selecting previously unselected package mysql-server.
+Preparing to unpack .../mysql-server_5.7.18-0ubuntu0.16.04.1_all.deb ...
+Unpacking mysql-server (5.7.18-0ubuntu0.16.04.1) ...
+Errors were encountered while processing:
+ /var/cache/apt/archives/mysql-server-5.7_5.7.18-0ubuntu0.16.04.1_amd64.deb
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+root@asus:/home/asus# ll /var/lib/mysql/
+total 110632
+drwxr-xr-x  4 mysql mysql     4096 Jun  6 10:47 ./
+drwxr-xr-x 69 root  root      4096 Jun  6 10:44 ../
+-rw-rw----  1 mysql mysql    16384 Jun  6 10:47 aria_log.00000001
+-rw-rw----  1 mysql mysql       52 Jun  6 10:47 aria_log_control
+-rw-r--r--  1 root  root         0 Jun  6 10:47 debian-10.2.flag
+-rw-rw----  1 mysql mysql     2799 Jun  6 10:47 ib_buffer_pool
+-rw-rw----  1 mysql mysql 12582912 Jun  6 10:47 ibdata1
+-rw-rw----  1 mysql mysql 50331648 Jun  6 10:47 ib_logfile0
+-rw-rw----  1 mysql mysql 50331648 Jun  6 10:38 ib_logfile1
+-rw-rw----  1 mysql mysql        0 Jun  6 10:40 multi-master.info
+drwx------  2 mysql mysql     4096 Jun  6 10:38 mysql/
+drwx------  2 mysql mysql     4096 Jun  6 10:47 performance_schema/
+root@asus:/home/asus# ll /var/lib/mysql/debian-10.2.flag

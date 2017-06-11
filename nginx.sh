@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-
 yum update -y
 yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64 libxml2-devel
 yum install -y libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel

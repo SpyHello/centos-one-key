@@ -123,9 +123,9 @@ echo 1024 >/proc/sys/net/core/somaxconn
 
 
 # 正确给OpenVZ的VPS增加SWAP的做法是登录母鸡：
-copy ${CURRENT_DIR}/repo/openvz.repo /etc/yum.repos.d/openvz.repo
-cd /etc/yum.repos.d
-rpm --import http://download.openvz.org/RPM-GPG-Key-OpenVZ
-yum update -y
-yum install ovzkernel vzctl vzquota -y
-vzctl set 33 --swappages 0:2048M --save
+#copy ${CURRENT_DIR}/repo/openvz.repo /etc/yum.repos.d/openvz.repo
+#cd /etc/yum.repos.d
+#rpm --import http://download.openvz.org/RPM-GPG-Key-OpenVZ
+#yum update -y
+#yum install ovzkernel vzctl vzquota -y
+#vzctl set 33 --swappages 0:2048M --save
