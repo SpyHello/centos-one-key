@@ -49,7 +49,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=${mysql_dir}/ \
 -DDEFAULT_CHARSET=utf8 \
 -DDEFAULT_COLLATION=utf8_general_ci \
 -DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
--DWITH_DEBUG=0 -with-low-memory
+-DWITH_DEBUG=0
 
 
 # How to Fix PHP Configure “CC Internal error Killed (program cc1)” Error
@@ -59,7 +59,6 @@ make && make install
 rm -rf /etc/my.cnf
 rm -rf /etc/init.d/mysqld
 
-cp /root/my.cnf /etc/my.cnf
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod a+x /etc/init.d/mysqld
 chkconfig --add mysqld

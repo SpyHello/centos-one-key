@@ -43,7 +43,7 @@ function buildir(){
 function download(){
     buildir `dirname $1`
     if [ ! -f $1 ]; then
-        echo -e "file '${1}' begin download";
+        echo -e "file '${1}' begin download from '${2}'";
     #   wget命令不存在于mingw环境中
     #        wget $2 -O $1
         curl -o $1 -L --connect-timeout 100000 --max-time 100000 --retry 100 $2

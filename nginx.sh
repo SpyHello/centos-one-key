@@ -93,3 +93,6 @@ fi
 #nginx
 ## /home/srv/nginx/sbin/nginx -c /home/srv/nginx/conf/nginx.conf' > /etc/init.d/nginx
 #chmod a+x /etc/init.d/nginx
+
+
+# TODO:systemctl开启nginx失效的情况下,先删除/etc/rc.d/rc5.d/S85nginx,再执行命令 chkconfig --add nginx && systemctl enable nginx && systemclt start nginx

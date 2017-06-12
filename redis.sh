@@ -36,9 +36,14 @@ if [ ! -f ${redis_init_script} ]; then
     # copy config file
     cp ${install_dir}/${redis}/utils/redis_init_script ${redis_init_script}
 
+
+    echo "vm.overcommit_memory = 1" >> /etc/profile
+    sysctl vm.overcommit_memory=1
+
     # run as system service
     iinsert 1 "# chkconfig: 2345 80 90" /etc/init.d/redis
     chkconfig --add redis
+    # TODO: add 'vm.overcommit_memory=1' to '/etc/sysctl.conf'
     systemctl start redis
     systemctl enable redis
 fi
