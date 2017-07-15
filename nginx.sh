@@ -37,12 +37,7 @@ fi
 if [ ! -f ${NGINX_HOME}/install.lock ]; then
     cd ${httpd_folder_path}
     # default prefix to "/usr/local/nginx/sbin  "
-    ./configure \
-    --prefix=${NGINX_HOME} --user=${USER} --group=${GROUP}  \
-    --with-http_realip_module  \
-    --with-http_sub_module  --with-http_gzip_static_module   \
-    --with-http_stub_status_module    \
-    --with-pcre --with-http_ssl_module
+    ./configure  --prefix=${NGINX_HOME} --user=${USER} --group=${GROUP}   --with-http_realip_module    --with-http_sub_module  --with-http_gzip_static_module  --with-http_stub_status_module --with-pcre --with-http_ssl_module
     # make clean &&
     make && make install
 

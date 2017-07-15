@@ -5,7 +5,7 @@ yum install -y curl  wget make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_
 yum install -y freetype-devel.x86_64  libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x86_64
 yum install -y openssl.x86_64 openssl-devel libxml2-devel
 # libperl-dev libfreetype6-dev libpng12-dev libpcre2-dev libssh-dev libcurl4-openssl-dev libxml2-dev
-
+# apt install libcurl4-openssl-dev libperl-dev libfreetype6-dev libpcre3-dev libxml2-dev openssl libssl-dev
 ########################################################################################################################
 SRV_HOME=/home/srv
 PHP7_HOME=${SRV_HOME}/php7
