@@ -41,19 +41,8 @@ fi
 # php主程序安装
 if [ ! -f ${PHP7_HOME}/path.lock ]; then
     cd ${php_folder_path}
-    ./configure --prefix=${PHP7_HOME}  \
-                --with-libdir=lib64 \
-                --enable-fpm \
-                --enable-sockets \
-                --with-openssl  \
-                --with-libxml-dir \
-                --with-pcre-regex \
-                --enable-mbstring   \
-                --with-pdo-mysql    \
-                --with-openssl-dir \
-                --with-gd  --with-freetype-dir  \
-                --with-curl  \
-                --enable-pcntl --enable-zip
+    # --with-apxs2=/home/linzh/soft/apache24/bin/apxs
+    ./configure --prefix=${PHP7_HOME}  --with-libdir=lib64 --enable-bcmath  --enable-fpm --enable-sockets --with-openssl  --with-libxml-dir --with-pcre-regex --enable-mbstring   --with-pdo-mysql    --with-openssl-dir --with-gd  --with-freetype-dir  --with-curl  --enable-pcntl --enable-zip
     make && make install
 
     if [ -d ${PHP7_HOME}/lib/ ] ; then

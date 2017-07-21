@@ -74,7 +74,7 @@ fi
 if [ ! -f ${HTTPD_HOME}/path.lock ]; then
     cd ${INSTALL_HOME}/${httpd}
     # install
-    ./configure --prefix=${HTTPD_HOME} --with-included-apr --enable-ssl --enable-so
+    ./configure --prefix=${HTTPD_HOME} --with-included-apr --enable-ssl --enable-so --enable-vhost-alias--enable-rewrite
     make clean && make && make install
 
     addpath ${HTTPD_HOME}/bin
