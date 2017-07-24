@@ -13,8 +13,8 @@ nginx_download="http://nginx.org/download/${nginx}.tar.gz"
 SERVER_DIR=/home/srv
 INSTALL_DIR=${SERVER_DIR}/install
 NGINX_HOME=${SERVER_DIR}/nginx
-USER=nobody
-GROUP=nobody
+USER=linzh
+GROUP=linzh
 
 # 删除卸载残留
 rm -rf  /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx ${NGINX_HOME}

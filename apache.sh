@@ -3,8 +3,12 @@
 yum update -y
 yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64
 yum install -y pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
-
+# xml/apr_xml.c:35:19: fatal error: expat.h: No such file or directory
+# sudo apt install libxml++2.6-dev
+# Makefile:48: recipe for target 'htpasswd' failed
+# sudo apt install  libapache-htpasswd-perl
 #######################################  公共区域 ##########################################################################
+./include.sh
 
 CURRENT_DIR=`pwd`
 
@@ -18,16 +22,16 @@ apr_util=apr-util-1.5.4
 MIRROR=http://apache.01link.hk/
 
 # 服务器目录
-SRV_HOME=/srv
+SRV_HOME=/home/srv
 HTTPD_HOME=${SRV_HOME}/apache24
 INSTALL_HOME=${SRV_HOME}/install
 WEBROOT=${SRV_HOME}/webroot
 SERVER_ADMIN=784855684@qq.com
 # 监听端口
-PORT=8080
+PORT=80
 # 手机进程用户组
-USER=daemon
-GROUP=daemon
+USER=linzh
+GROUP=linzh
 LOG_LEVEL=error
 # 创建相关目录
 buildir ${SRV_HOME}
@@ -74,7 +78,7 @@ fi
 if [ ! -f ${HTTPD_HOME}/path.lock ]; then
     cd ${INSTALL_HOME}/${httpd}
     # install
-    ./configure --prefix=${HTTPD_HOME} --with-included-apr --enable-ssl --enable-so --enable-vhost-alias--enable-rewrite
+    ./configure --prefix=${HTTPD_HOME} --enable-static-htpasswd --with-pcre --with-mpm=event --with-included-apr --enable-ssl --enable-so
     make clean && make && make install
 
     addpath ${HTTPD_HOME}/bin

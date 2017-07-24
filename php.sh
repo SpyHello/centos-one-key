@@ -12,8 +12,13 @@ PHP7_HOME=${SRV_HOME}/php7
 INSTALL_HOME=${SRV_HOME}/install
 # var
 php=php-7.0.17
-# MIRROR=http://am1.php.net
-MIRROR=http://cn2.php.net
+if [ $1 = 'am' ]; then
+    MIRROR=http://am1.php.net
+else
+    MIRROR=http://cn2.php.net
+fi
+#
+
 
 # php 源码包下载解压
 php_file_path=${INSTALL_HOME}/${php}.tar.gz
