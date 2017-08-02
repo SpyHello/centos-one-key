@@ -28,10 +28,10 @@ function install_mysql()  {
     mkdir -p ${mysql_datadir}
     chown mysql.mysql -R ${mysql_datadir}
     echo "[client]
-port            = 20175
+port            = 3306
 socket          = /tmp/mysql.sock
 [mysqld]
-port            = 20175
+port            = 3306
 socket          = /tmp/mysql.sock
 skip-external-locking
 key_buffer_size = 12M
@@ -63,26 +63,13 @@ interactive-timeout" > ${mysql_dir}/my.cnf
 
     tar zxf mariadb-10.1.21.tar.gz
     cd mariadb-10.1.21
-    cmake . -DCMAKE_INSTALL_PREFIX=${mysql_dir}/ \
-    -DMYSQL_DATADIR=${mysql_datadir} \
-    -DWITH_INNOBASE_STORAGE_ENGINE=1 \
-    -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
-    -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
-    -DENABLED_LOCAL_INFILE=1 \
-    -DMYSQL_TCP_PORT=3306 \
-    -DWITH_SSL=system \
-    -DWITH_ZLIB=system \
-    -DWITH_LIBWRAP=0 \
-    -DCMAKE_THREAD_PREFER_PTHREAD=1 \
-    -DEXTRA_CHARSETS=all \
-    -DDEFAULT_CHARSET=utf8 \
-    -DDEFAULT_COLLATION=utf8_general_ci \
-    -DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
-    -DWITH_DEBUG=0 -with-low-memory
+    cmake . -DCMAKE_INSTALL_PREFIX=${mysql_dir}/  -DMYSQL_DATADIR=${mysql_datadir} \
+    -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_ARCHIVE_STORAGE_ENGINE=1 -DWITH_BLACKHOLE_STORAGE_ENGINE=1 -DENABLED_LOCAL_INFILE=1 -DMYSQL_TCP_PORT=3306 -DWITH_SSL=system -DWITH_ZLIB=system -DWITH_LIBWRAP=0 -DCMAKE_THREAD_PREFER_PTHREAD=1 -DEXTRA_CHARSETS=all -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -DWITH_DEBUG=0
 
 
 # How to Fix PHP Configure “CC Internal error Killed (program cc1)” Error
 # http://linux.101hacks.com/unix/fix-php-cc-internal-errror-killed/
+# 增加虚拟内存
 
     make && make install
     rm -rf /etc/my.cnf

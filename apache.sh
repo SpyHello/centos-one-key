@@ -8,18 +8,18 @@ yum install -y pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 
 # Makefile:48: recipe for target 'htpasswd' failed
 # sudo apt install  libapache-htpasswd-perl
 #######################################  公共区域 ##########################################################################
-./include.sh
+source ./include.sh
 
 CURRENT_DIR=`pwd`
 
 ########################################################################################################################
 
 # 版本
-httpd=httpd-2.4.25
+httpd=httpd-2.4.27
 apr=apr-1.5.2
 apr_util=apr-util-1.5.4
 # 镜像列表：http://www.apache.org/mirrors/
-MIRROR=http://apache.01link.hk/
+MIRROR=http://mirror.bit.edu.cn/apache/
 
 # 服务器目录
 SRV_HOME=/home/srv
@@ -79,7 +79,7 @@ if [ ! -f ${HTTPD_HOME}/path.lock ]; then
     cd ${INSTALL_HOME}/${httpd}
     # install
     ./configure --prefix=${HTTPD_HOME} --enable-static-htpasswd --with-pcre --with-mpm=event --with-included-apr --enable-ssl --enable-so
-    make clean && make && make install
+    make && make install
 
     addpath ${HTTPD_HOME}/bin
     touch ${HTTPD_HOME}/path.lock
