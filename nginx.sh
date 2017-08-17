@@ -7,14 +7,14 @@ yum install -y libpng-devel.x86_64 pcre pcre-devel openssl-devel openssl-libs.x8
 source ./include.sh
 
 
-nginx="nginx-1.12.0"
+nginx="nginx-1.12.1"
 nginx_download="http://nginx.org/download/${nginx}.tar.gz"
 
 SERVER_DIR=/home/srv
 INSTALL_DIR=${SERVER_DIR}/install
 NGINX_HOME=${SERVER_DIR}/nginx
-USER=linzh
-GROUP=linzh
+USER=nobody
+GROUP=nobody
 
 # 删除卸载残留
 rm -rf  /etc/init.d/nginx /etc/rc.d/rc5.d/S85nginx ${NGINX_HOME}

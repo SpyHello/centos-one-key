@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# chkconfig: 2345 85 15
+# chkconfig: 2342 85 15
+# 2342 is order number of startup,2345 is redis's order number
 #
 # Startup script for the nginx Web Server
 #
