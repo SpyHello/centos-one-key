@@ -15,5 +15,6 @@ git config --global user.email 784855684@qq.com
 git config --global core.autocrlf false
 touch /home/git/.ssh/authorized_keys
 cat /home/git/.ssh/id_rsa.pub > /home/git/.ssh/authorized_keys
+chmod 0600 /home/git/.ssh/authorized_keys
 
 passwd git
