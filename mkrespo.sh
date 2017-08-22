@@ -13,6 +13,8 @@ GIT_DIR=\${MY_WORKSPACE}/.git
 GIT_WORK_TREE=\${MY_WORKSPACE}
 cd \${MY_WORKSPACE}
 git pull origin master
+
+
 " >>  post-receive
 chmod a+x post-receive
 

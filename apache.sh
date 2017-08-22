@@ -2,7 +2,8 @@
 
 yum update -y
 yum install -y curl make gcc autoconf perl-devel.x86_64 libcurl-devel.x86_64 freetype-devel.x86_64  libpng-devel.x86_64
-yum install -y pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel
+yum install -y pcre pcre-devel openssl-devel openssl-libs.x86_64 openssl.x86_64 openssl-devel libxml2-devel.x86_64 libxml2.x86_64 libxml2-static.x86_64
+yum install -y expat-devel
 # xml/apr_xml.c:35:19: fatal error: expat.h: No such file or directory
 # sudo apt install libxml++2.6-dev
 # Makefile:48: recipe for target 'htpasswd' failed
@@ -16,10 +17,15 @@ CURRENT_DIR=`pwd`
 
 # 版本
 httpd=httpd-2.4.27
-apr=apr-1.5.2
-apr_util=apr-util-1.5.4
+apr=apr
+apr_util=apr-util
 # 镜像列表：http://www.apache.org/mirrors/
 MIRROR=http://mirror.bit.edu.cn/apache/
+
+
+apr_source=http://mirrors.tuna.tsinghua.edu.cn/apache//apr/apr-1.6.2.tar.gz
+apr_util_source=http://mirrors.tuna.tsinghua.edu.cn/apache//apr/apr-util-1.6.0.tar.gz
+
 
 # 服务器目录
 SRV_HOME=/home/srv
@@ -53,8 +59,8 @@ fi
 buildir ${httpd_folder_path}/srclib
 
 # download apr
-apr_file_path=${INSTALL_HOME}/${apr}.tar.gz
-download ${apr_file_path} ${MIRROR}/apr/${apr}.tar.gz
+apr_file_path=${INSTALL_HOME}/apr.tar.gz
+download ${apr_file_path} ${apr_source}
 apr_folder_path=${httpd_folder_path}/srclib/apr
 if [ ! -d ${apr_folder_path} ]; then
     tar -zxf ${apr_file_path} -C ${INSTALL_HOME}
