@@ -16,19 +16,17 @@ CURRENT_DIR=`pwd`
 ########################################################################################################################
 
 # 版本
-httpd=httpd-2.4.27
-apr=apr
-apr_util=apr-util
+httpd=httpd-2.4.29
+apr=apr-1.6.3
+apr_util=apr-util-1.6.1
 # 镜像列表：http://www.apache.org/mirrors/
-MIRROR=http://mirror.bit.edu.cn/apache/
-
-
-apr_source=http://mirrors.tuna.tsinghua.edu.cn/apache//apr/apr-1.6.2.tar.gz
-apr_util_source=http://mirrors.tuna.tsinghua.edu.cn/apache//apr/apr-util-1.6.0.tar.gz
-
+MIRROR=http://mirrors.tuna.tsinghua.edu.cn/apache/
+httpd_source=${MIRROR}/httpd/${httpd}.tar.gz
+apr_source=${MIRROR}/apr/${apr}.tar.gz
+apr_util_source=${MIRROR}/apr/${apr_util}.tar.gz
 
 # 服务器目录
-SRV_HOME=/home/srv
+SRV_HOME=~/srv
 HTTPD_HOME=${SRV_HOME}/apache24
 INSTALL_HOME=${SRV_HOME}/install
 WEBROOT=${SRV_HOME}/webroot
@@ -47,7 +45,7 @@ buildir ${WEBROOT}
 
 # download httpd
 httpd_file_path=${INSTALL_HOME}/${httpd}.tar.gz
-download ${httpd_file_path} ${MIRROR}/httpd/${httpd}.tar.gz
+download ${httpd_file_path} ${httpd_source}
 httpd_folder_path=${INSTALL_HOME}/${httpd}
 if [ ! -d ${httpd_folder_path} ]; then
     tar -zxf ${httpd_file_path} -C ${INSTALL_HOME}
